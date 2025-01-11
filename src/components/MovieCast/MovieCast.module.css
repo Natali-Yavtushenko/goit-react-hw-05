@@ -1,0 +1,42 @@
+.list {
+  display: block;
+  flex-wrap: wrap;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  width: 150px;
+  text-align: center;
+}
+
+.image {
+  width: 150px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.info {
+  text-align: left;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 4px;
+}
+
+.chracter {
+  font-size: 14px;
+  color: aqua;
+}
+
+.message,
+.error {
+  font-size: 18px;
+  color: brown;
+  text-align: center;
+  margin-top: 20px;
+}

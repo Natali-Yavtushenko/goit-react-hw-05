@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  left: 60%;
+  transform: translateX(-140%);
+}
+
+.detailsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 44px;
+  left: 28%;
+  transform: translateX(-170%);
+}
+
+.title {
+  font-size: 32px;
+}
+
+.img {
+  position: absolute;
+  top: 80px;
+  left: 16%;
+  transform: translateX(-180%);
+}
