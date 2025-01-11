@@ -32,33 +32,35 @@ const MovieDetailsPage = () => {
 
   return (
     <div className={s.container}>
-      <div className={s.detailsContainer}>
-        <Link to="/">Go back</Link>
-        <img
-          className={s.img}
-          src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
-              : "https://via.placeholder.com/500x750?text=No+Image"
-          }
-          alt={movie.title}
-        />
-        <div className={s.details}>
-          <h1 className={s.title}>
-            {movie.title} ({movie.release_date.slice(0, 4)})
-          </h1>
-          <h4>Overview</h4>
-          <p>{movie.overview}</p>
-          <h4>Genres</h4>
-          <p>{movie.genres.map((genre) => genre.name).join(", ")}</p>
+      <img
+        className={s.img}
+        src={
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
+            : "https://via.placeholder.com/500x750?text=No+Image"
+        }
+        alt={movie.title}
+      />
+      <div className={s.details}>
+        <h1 className={s.title}>
+          {movie.title} ({movie.release_date.slice(0, 4)})
+        </h1>
+        <p>
+          <strong>User Score:</strong> {movie.vote_average * 10}%
+        </p>
+        <h4>Overview</h4>
+        <p>{movie.overview}</p>
+        <h4>Genres</h4>
+        <p>{movie.genres.map((genre) => genre.name).join(", ")}</p>
+        <div className={s.additionalInfo}>
+          <nav>
+            <h3>Additional information</h3>
+            <Link to="cast">Cast</Link>
+            <Link to="reviews">Reviews</Link>
+          </nav>
+          <Outlet />
         </div>
       </div>
-      <nav>
-        <h3>Additional information</h3>
-        <Link to="cast">Cast</Link>
-        <Link to="reviews">Reviews</Link>
-      </nav>
-      <Outlet />
     </div>
   );
 };

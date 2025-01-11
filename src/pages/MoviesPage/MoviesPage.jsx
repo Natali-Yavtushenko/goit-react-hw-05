@@ -6,7 +6,7 @@ import MyForm from "../../components/Form/Form";
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
+  const [setQuery] = useState("");
 
   useEffect(() => {
     const fetchMovies = async () => {
