@@ -1,5 +1,5 @@
-import { useParams, Outlet, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useParams, Outlet, Link, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { fetchMovieDetails } from "../../services/api";
 import s from "./MovieDetailsPage.module.css";
 
@@ -8,6 +8,8 @@ const MovieDetailsPage = () => {
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
 
+  const location = useLocation();
+  const goBackRef = useRef(location.state?.from || "/");
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -32,6 +34,7 @@ const MovieDetailsPage = () => {
 
   return (
     <div className={s.container}>
+      <Link to={goBackRef.current}>Go back</Link>
       <img
         className={s.img}
         src={

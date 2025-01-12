@@ -4,34 +4,35 @@ import { searchMovies } from "../../services/api";
 import MyForm from "../../components/Form/Form";
 
 const MoviesPage = () => {
-  const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
-  const [setQuery] = useState("");
+  const [movies, setMovies] = useState([]); // Стан для списку фільмів
+  const [error, setError] = useState(null); // Стан для помилки
+  const [query, setQuery] = useState(""); // Стан для запиту пошуку
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const data = await searchMovies();
-        setMovies(data);
+        const data = await searchMovies(query); // Використовуємо query у виклику API
+        setMovies(data); // Оновлюємо список фільмів
       } catch (err) {
-        setError(err.message);
+        setError(err.message); // Встановлюємо помилку
       }
     };
 
-    fetchMovies();
-  }, []);
+    if (query) fetchMovies(); // Виконуємо пошук лише якщо є query
+  }, [query]); // Запуск useEffect при зміні query
+
+  const handleSearch = (newQuery) => {
+    setQuery(newQuery); // Оновлюємо query через функцію
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  const handleSearch = (newquery) => {
-    setQuery(newquery);
-  };
-
   return (
     <>
-      <MyForm handleSearch={handleSearch} />
+      <MyForm handleSearch={handleSearch} />{" "}
+      {/* Передаємо handleSearch у MyForm */}
       <ul>
         {Array.isArray(movies) &&
           movies.map((movie) => (
