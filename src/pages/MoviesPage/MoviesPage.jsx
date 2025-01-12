@@ -14,10 +14,8 @@ const MoviesPage = () => {
     const fetchMovies = async () => {
       if (!query) return;
       try {
-        console.log("Fetching movies for query:", query);
         const data = await searchMovies(query);
-        console.log("Fetched data:", data);
-        setMovies(data.results || []);
+        setMovies(data || []);
       } catch (err) {
         setError(err.message);
       }
@@ -42,12 +40,15 @@ const MoviesPage = () => {
     <>
       <MyForm handleSearch={handleSearch} />
       <ul>
-        {Array.isArray(movies) &&
+        {movies.length > 0 ? (
           movies.map((movie) => (
             <li key={movie.id}>
               <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
             </li>
-          ))}
+          ))
+        ) : (
+          <p>No movies found</p>
+        )}
       </ul>
     </>
   );
