@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import MovieList from "./components/MovieList/MovieList";
 import Navigation from "./components/Navigation/Navigation";
 import MovieCast from "./components/MovieCast/MovieCast";
 import MovieReviews from "./components/MovieReviews/MovieReviews";

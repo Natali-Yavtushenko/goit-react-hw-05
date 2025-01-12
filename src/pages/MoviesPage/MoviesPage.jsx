@@ -1,28 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { searchMovies } from "../../services/api";
 import MyForm from "../../components/Form/Form";
 
 const MoviesPage = () => {
-  const [movies, setMovies] = useState([]); // Стан для списку фільмів
-  const [error, setError] = useState(null); // Стан для помилки
-  const [query, setQuery] = useState(""); // Стан для запиту пошуку
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query") || "";
 
   useEffect(() => {
     const fetchMovies = async () => {
+      if (!query) return;
       try {
-        const data = await searchMovies(query); // Використовуємо query у виклику API
-        setMovies(data); // Оновлюємо список фільмів
+        console.log("Fetching movies for query:", query);
+        const data = await searchMovies(query);
+        console.log("Fetched data:", data);
+        setMovies(data.results || []);
       } catch (err) {
-        setError(err.message); // Встановлюємо помилку
+        setError(err.message);
       }
     };
 
-    if (query) fetchMovies(); // Виконуємо пошук лише якщо є query
-  }, [query]); // Запуск useEffect при зміні query
+    fetchMovies();
+  }, [query]);
 
   const handleSearch = (newQuery) => {
-    setQuery(newQuery); // Оновлюємо query через функцію
+    if (newQuery.trim() === "") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ query: newQuery });
+    }
   };
 
   if (error) {
@@ -31,8 +40,7 @@ const MoviesPage = () => {
 
   return (
     <>
-      <MyForm handleSearch={handleSearch} />{" "}
-      {/* Передаємо handleSearch у MyForm */}
+      <MyForm handleSearch={handleSearch} />
       <ul>
         {Array.isArray(movies) &&
           movies.map((movie) => (

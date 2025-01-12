@@ -3,8 +3,8 @@ import s from "./form.module.css";
 
 const MyForm = ({ handleSearch }) => {
   const onSubmit = (values, { resetForm }) => {
-    handleSearch(values.query); // Pass query to handleSearch
-    resetForm(); // Reset the form after submission
+    handleSearch(values.query);
+    resetForm();
   };
 
   const initialValues = { query: "" };
