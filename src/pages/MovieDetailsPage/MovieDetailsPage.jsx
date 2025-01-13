@@ -9,6 +9,7 @@ const MovieDetailsPage = () => {
   const [error, setError] = useState(null);
 
   const location = useLocation();
+
   const goBackRef = useRef(location.state || "/");
   useEffect(() => {
     const fetchDetails = async () => {

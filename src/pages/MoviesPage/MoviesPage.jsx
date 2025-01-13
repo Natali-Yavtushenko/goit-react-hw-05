@@ -1,11 +1,14 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { searchMovies } from "../../services/api";
 import MyForm from "../../components/Form/Form";
+import MovieList from "../../components/MovieList/MovieList";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
+
+  const location = useLocation();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("query") || "";
@@ -43,13 +46,21 @@ const MoviesPage = () => {
         {movies.length > 0 ? (
           movies.map((movie) => (
             <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+              <Link
+                to={{
+                  pathname: `/movies/${movie.id}`,
+                  state: { from: location },
+                }}
+              >
+                {movie.title}
+              </Link>
             </li>
           ))
         ) : (
           <p>No movies found</p>
         )}
       </ul>
+      <MovieList movies={movies} query={query} />
     </>
   );
 };
