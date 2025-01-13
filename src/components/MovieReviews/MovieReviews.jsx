@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieReviews } from "../../services/api";
-import { useState, useEffect } from "react";
 import s from "./MovieReviews.module.css";
 
 const MovieReviews = () => {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchMovieReviews(movieId).then(setReviews);
+    const fetchReviews = async () => {
+      try {
+        const data = await fetchMovieReviews(movieId);
+        setReviews(data.results || []); // Перевірка структури відповіді
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchReviews();
   }, [movieId]);
 
-  if (!reviews) {
-    return null;
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!reviews || reviews.length === 0) {
+    return <p>No reviews available for this movie.</p>;
   }
 
   return (
@@ -27,7 +40,6 @@ const MovieReviews = () => {
           </li>
         ))}
       </ul>
-      : (<p>No reviews available for this movie.</p>)
     </div>
   );
 };
