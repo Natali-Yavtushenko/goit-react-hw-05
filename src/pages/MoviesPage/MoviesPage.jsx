@@ -42,25 +42,11 @@ const MoviesPage = () => {
   return (
     <>
       <MyForm handleSearch={handleSearch} />
-      <ul>
-        {movies.length > 0 ? (
-          movies.map((movie) => (
-            <li key={movie.id}>
-              <Link
-                to={{
-                  pathname: `/movies/${movie.id}`,
-                  state: { from: location },
-                }}
-              >
-                {movie.title}
-              </Link>
-            </li>
-          ))
-        ) : (
-          <p>No movies found</p>
-        )}
-      </ul>
-      <MovieList movies={movies} query={query} />
+      {movies.length > 0 ? (
+        <MovieList movies={movies} query={query} />
+      ) : (
+        <p>No movies found</p>
+      )}
     </>
   );
 };
